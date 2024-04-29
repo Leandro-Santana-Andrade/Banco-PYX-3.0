@@ -3,14 +3,13 @@ import os # Adicionado para utilizar a opção de limpar menu
 def menu():
 
     menu = """ 
-                BANCO PYX
+                BANCO PYX 2.0
     [1] Depositar
     [2] Sacar
     [3] Extrato
     [4] Cadastrar Usuario
     [5] Cadastrar Conta
     [6] Listar Contas
-    [7] Listar usuarios
     [0] Sair
 
     =>"""
@@ -65,17 +64,18 @@ def imprimir_extrato(saldo, *, extrato):
 
 def cadastrar_usuario(usuarios):
      
+     os.system('clear')  
      cpf = input("Digite o CPF: ")
      usuario = filtrar_usuario(cpf,usuarios)
 
      if usuario:
-        print("usuario possui cadastro")
+        print("Usuario possui cadastro")
 
         return
      nome = input("Digite o nome: ")
      dt_nascimento = input("Digite a data de nascimento (dd-mm-aaaa): ")
      endereco = input("Infome o endereco (logradouro, numero, bairro - cidade/sigla do estado): ")
-     usuarios.append({"nome:": nome, "dt_nascimento":dt_nascimento, "cpf": cpf, "endereco": endereco})
+     usuarios.append({"nome:":nome, "dt_nascimento":dt_nascimento, "cpf": cpf, "endereco": endereco})
 
      print("Usuario cadastrado!")
 
@@ -86,6 +86,7 @@ def filtrar_usuario(cpf, usuarios):
 
 def cadastrar_conta(agencia, numero_conta, usuarios):
 
+    os.system('clear')  
     cpf = input("Digite o cpf do usuario: ")
     usuario = filtrar_usuario(cpf, usuarios)
 
@@ -97,14 +98,19 @@ def cadastrar_conta(agencia, numero_conta, usuarios):
 
 def listar_contas (contas):
      
-     for conta in contas:
-        linha = f"""\
-        Agencia:{conta["agencia"]}
-        Conta Corrente: {conta["numero_conta"]}
-        Titular: {conta["usuario"]["nome"]}
+    os.system('clear')  
+    if contas == []:
+        print("Nenhuma conta cadastrada!")
+    else:   
+        for conta in contas:
+            linha = f"""
+    Agencia: {conta['agencia']}
+    Conta Corrente: {conta['numero_conta']}
+    Titular: {conta['usuario']}
     """
-        print("n" * 100)
-        print((linha))
+            print("=" * 80)
+            print(linha)
+            print("=" * 80)
 
 def main():
     saldo = 0
@@ -143,11 +149,11 @@ def main():
 
             imprimir_extrato(saldo, extrato=extrato)
 
-        elif opcao == 4:
+        elif opcao == 4: # Opção de cadastrar usuario
              
            cadastrar_usuario(usuarios) 
         
-        elif opcao == 5:
+        elif opcao == 5: # Opção de cadastrar conta
 
            numero_conta = len(contas)+1
            conta = cadastrar_conta(agencia, numero_conta, usuarios)  
@@ -155,12 +161,11 @@ def main():
            if conta:
                 contas.append(conta)
         
-        elif opcao == 6:
+        elif opcao == 6: # Opção de listar conta
              
             listar_contas(contas)
 
-        elif opcao == 0:
-        # Opção de sair da aplicação
+        elif opcao == 0: # Opção de sair da aplicação
             print('''
             Obrigado por utilizar nosso servico!
             ''')
