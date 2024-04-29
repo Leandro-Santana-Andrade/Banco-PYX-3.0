@@ -1,4 +1,6 @@
 import os # Adicionado para utilizar a opção de limpar menu
+import os
+import platform
 
 def menu():
 
@@ -20,7 +22,7 @@ def depositar(saldo, valor, extrato, /):
     if ( valor > 0 ):
         extrato += (f"Desposito realizado no valor de R$ {valor:.2f}\n")
         saldo += valor    
-        os.system('clear')
+        limpar()
     else:
         print("Valor invalido, tente novamente!")
     return saldo, extrato
@@ -38,7 +40,7 @@ def sacar(*, saldo, saque, extrato, limite, numero_saques, limite_saques):
                     saldo = saldo - saque
                     extrato += (f"Saque realizado no valor de R$ {saque:.2f}\n")
                     numero_saques += 1
-                    os.system('clear')
+                    limpar()
     else:
                 # Informa que nao ha mais limite para saque e eliminar opção de sacar do menu
                 print("Limite de saques excedido")
@@ -52,7 +54,7 @@ def sacar(*, saldo, saque, extrato, limite, numero_saques, limite_saques):
     return saldo, extrato
 
 def imprimir_extrato(saldo, *, extrato):
-    os.system('clear')  
+    limpar() 
     if extrato == "":
         print("\n Nao foram realizadas movimentacoes.")
     else:
@@ -64,7 +66,7 @@ def imprimir_extrato(saldo, *, extrato):
 
 def cadastrar_usuario(usuarios):
      
-     os.system('clear')  
+     limpar() 
      cpf = input("Digite o CPF: ")
      usuario = filtrar_usuario(cpf,usuarios)
 
@@ -86,7 +88,7 @@ def filtrar_usuario(cpf, usuarios):
 
 def cadastrar_conta(agencia, numero_conta, usuarios):
 
-    os.system('clear')  
+    limpar()  
     cpf = input("Digite o cpf do usuario: ")
     usuario = filtrar_usuario(cpf, usuarios)
 
@@ -98,7 +100,7 @@ def cadastrar_conta(agencia, numero_conta, usuarios):
 
 def listar_contas (contas):
      
-    os.system('clear')  
+    limpar()  
     if contas == []:
         print("Nenhuma conta cadastrada!")
     else:   
@@ -111,6 +113,14 @@ def listar_contas (contas):
             print("=" * 80)
             print(linha)
             print("=" * 80)
+
+def limpar():
+
+    # Verificar o sistema operacional
+    if platform.system() == 'Windows':
+        os.system('cls')
+    else:
+        os.system('clear')
 
 def main():
     saldo = 0
