@@ -1,6 +1,103 @@
-import os # Adicionado para utilizar a opção de limpar menu
-import os
-import platform
+#import os # Adicionado para utilizar a opção de limpar menu
+#import platform
+
+from abc import ABC, abstractclassmethod, abstractproperty
+from datetime import datetime
+
+class Cliente:
+    def __init__(self, endereco):
+        self.endereco = endereco
+        self.contas = []
+
+    def realizar_transacao(self, conta, transacao):
+         transacao.registrar(conta)
+
+    def adicionar_conta(self, conta):
+         self.conta.append(conta)
+
+class PessoaFisica(Cliente):
+    def __init__(self, nome, data_nascimento, cpf, endereco):
+         super().__init__(endereco)
+         self.nome = nome
+         self.data_nascimento = data_nascimento
+         self.cpf=  cpf
+
+class Conta:
+     def __init__(self, numero, cliente):
+        self.saldo = 0
+        self.numero = numero
+        self.agencia = "0001"
+        self.cliente = cliente
+        self.historico = Historico()
+
+@classmethod
+def nova_conta(cls, cliente, numero):
+        return cls(numero, cliente)
+
+@property
+def saldo (self):
+     return self._saldo
+
+@property
+def numero(self):
+     return self._numero
+
+@property
+def agencia(self):
+     return self._agencia
+
+@property
+def agencia(self):
+     return self._cliente
+
+@property
+def historico(self):
+    return self._historico
+
+def sacar(self, saque):
+    saldo = self.saldo
+    excedeu_saldo = saque > saldo
+
+    if excedeu_saldo:
+        print("Saldo insuficiente para saque.")
+    
+    elif saque > 0:
+        self._saldo -= saque
+        print("Saque realizado com sucesso!")
+        return True
+    
+    else:
+        print("Falha na operacao!")
+    
+    return False    
+
+def depositar(self, deposito):
+
+    if ( deposito > 0 ):
+        self._saldo += deposito
+        print("Deposito realizado!")
+    
+    else:
+        print("Valor invalido, tente novamente!")
+        return False
+
+    return True
+
+class ContaCorrete(Conta):
+    pass
+
+class Historico:
+    pass
+
+class Transacao(ABC):
+    pass
+
+class Saque(Transacao):
+    pass
+
+class Deposito(Transacao):
+    pass
+
 
 def menu():
 
@@ -16,42 +113,6 @@ def menu():
 
     =>"""
     return int(input(menu))
-
-def depositar(saldo, valor, extrato, /):
-
-    if ( valor > 0 ):
-        extrato += (f"Desposito realizado no valor de R$ {valor:.2f}\n")
-        saldo += valor    
-        limpar()
-    else:
-        print("Valor invalido, tente novamente!")
-    return saldo, extrato
-
-def sacar(*, saldo, saque, extrato, limite, numero_saques, limite_saques):
-
-# Valida se possui saldo ou se esta dentro do limite diario         
-    if numero_saques < limite_saques:
-
-        if saque > saldo or limite < saque or saque <= 0:
-                    print("Operacao nao permitida, valor insuficiente ou limite diario excedido")
-                    print(f"Limite diario R$ {limite}")
-                    print(f"Saldo em conta R$ {saldo:.2f}")
-        else:
-                    saldo = saldo - saque
-                    extrato += (f"Saque realizado no valor de R$ {saque:.2f}\n")
-                    numero_saques += 1
-                    limpar()
-    else:
-                # Informa que nao ha mais limite para saque e eliminar opção de sacar do menu
-                print("Limite de saques excedido")
-                menu = """ 
-                BANCO PYX
-    [1] Depositar
-    [3] Extrato
-    [0] Sair
-
-    =>"""
-    return saldo, extrato
 
 def imprimir_extrato(saldo, *, extrato):
     limpar() 
